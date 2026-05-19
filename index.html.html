@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>L&A Scaffolding — Order Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --navy: #17222f;
+    --orange: #e5500b;
+    --orange-dark: #c24309;
+    --light: #f4f5f7;
+    --border: #dde1e7;
+    --text: #1e2730;
+    --muted: #7a8494;
+  }
+
+  html, body {
+    background: var(--light);
+    font-family: 'Barlow', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: var(--navy);
+    border-bottom: 3px solid var(--orange);
+    padding: 14px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: 0.5px;
+  }
+
+  .app-header .subtitle {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #8a97a8;
+    margin-top: 2px;
+  }
+
+  /* ── JOB FIELDS ── */
+  .job-fields {
+    background: var(--navy);
+    padding: 0 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .job-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .job-field label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8a97a8;
+    font-weight: 700;
+  }
+
+  .job-field input {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 12px;
+    outline: none;
+    width: 100%;
+  }
+  .job-field input::placeholder { color: rgba(255,255,255,0.3); }
+  .job-field input:focus { border-color: var(--orange); background: rgba(255,255,255,0.15); }
+
+  /* ── CONTENT ── */
+  .content {
+    padding: 12px 12px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  .section-title {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-left: 4px solid var(--orange);
+  }
+
+  /* ── ITEM ROW ── */
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row.has-qty { background: #fff8f5; }
+
+  .item-info { flex: 1; min-width: 0; }
+
+  .item-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .item-desc {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── QTY CONTROL ── */
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
+  .qty-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
+  }
+  .qty-btn:first-child { border-radius: 8px 0 0 8px; }
+  .qty-btn:last-child  { border-radius: 0 8px 8px 0; }
+  .qty-btn:active { background: var(--orange); }
+
+  .qty-val {
+    width: 44px;
+    height: 36px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    background: var(--light);
+    border: none;
+    border-top: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+    outline: none;
+  }
+  .qty-val:focus { background: #fff; border-color: var(--orange); color: var(--orange); }
+
+  /* ── NOTES ── */
+  .notes-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .notes-title {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .notes-textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 12px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    border: none;
+    outline: none;
+    resize: vertical;
+    background: #fff;
+  }
+  .notes-textarea::placeholder { color: #bbb; }
+
+  /* ── STICKY BOTTOM BAR ── */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+  }
+
+  .btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: 1;
+  }
+  .btn-clear { background: var(--light); color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-clear:active { background: #e0e3e8; }
+  .btn-submit { background: var(--orange); color: #fff; }
+  .btn-submit:active { background: var(--orange-dark); }
+
+  /* ── SUMMARY OVERLAY ── */
+  #summary-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--light);
+    z-index: 200;
+    overflow-y: auto;
+    flex-direction: column;
+  }
+  #summary-overlay.active { display: flex; }
+
+  .summary-header {
+    background: var(--navy);
+    border-bottom: 3px solid var(--orange);
+    padding: 14px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+  .summary-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .summary-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .summary-meta .meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .summary-meta .meta-label {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a97a8;
+  }
+  .summary-meta .meta-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .summary-body {
+    padding: 12px 12px 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .summary-section {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .summary-sec-hd {
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  .summary-item:last-child { border-bottom: none; }
+  .summary-item-left { flex: 1; }
+  .summary-item-code {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .summary-item-desc {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 1px;
+  }
+  .summary-item-qty {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--orange);
+    flex-shrink: 0;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .summary-notes {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 12px 14px;
+  }
+  .summary-notes-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .summary-notes-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .summary-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    z-index: 300;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+  }
+  .btn-back { background: var(--light); color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-back:active { background: #e0e3e8; }
+  .btn-save { background: var(--orange); color: #fff; }
+  .btn-save:active { background: var(--orange-dark); }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 10px; }
+  .empty-state p { font-size: 15px; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <h1>L&amp;A Scaffolding</h1>
+  <div class="subtitle">Material Order Form</div>
+</div>
+
+<!-- JOB FIELDS -->
+<div class="job-fields">
+  <div class="job-field">
+    <label>Project Name</label>
+    <input type="text" id="project-name" placeholder="e.g. 123 Main St" autocomplete="off">
+  </div>
+  <div class="job-field">
+    <label>Date of Delivery</label>
+    <input type="text" id="delivery-date" placeholder="MM / DD / YYYY" autocomplete="off">
+  </div>
+  <div class="job-field">
+    <label>Preferred Delivery Time</label>
+    <input type="text" id="delivery-time" placeholder="e.g. 7:00 AM" autocomplete="off">
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- Standards & Vertical -->
+  <div class="section-card">
+    <div class="section-title">Standards &amp; Vertical</div>
+    <div class="item-row" id="row-RVS280"><div class="item-info"><div class="item-code">RVS280</div><div class="item-desc">Base Collar</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RVS280')">−</button><input class="qty-val" type="number" id="RVS280" min="0" value="" data-section="Standards &amp; Vertical" data-desc="Base Collar" data-code="RVS280" oninput="highlight('RVS280')"><button class="qty-btn" onclick="inc('RVS280')">+</button></div></div>
+    <div class="item-row" id="row-RV-C0500"><div class="item-info"><div class="item-code">RV-C0500</div><div class="item-desc">0.5m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C0500')">−</button><input class="qty-val" type="number" id="RV-C0500" min="0" value="" data-section="Standards &amp; Vertical" data-desc="0.5m Standard w/ Spigot" data-code="RV-C0500" oninput="highlight('RV-C0500')"><button class="qty-btn" onclick="inc('RV-C0500')">+</button></div></div>
+    <div class="item-row" id="row-RV-C1000"><div class="item-info"><div class="item-code">RV-C1000</div><div class="item-desc">1m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C1000')">−</button><input class="qty-val" type="number" id="RV-C1000" min="0" value="" data-section="Standards &amp; Vertical" data-desc="1m Standard w/ Spigot" data-code="RV-C1000" oninput="highlight('RV-C1000')"><button class="qty-btn" onclick="inc('RV-C1000')">+</button></div></div>
+    <div class="item-row" id="row-RV-C1500"><div class="item-info"><div class="item-code">RV-C1500</div><div class="item-desc">1.5m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C1500')">−</button><input class="qty-val" type="number" id="RV-C1500" min="0" value="" data-section="Standards &amp; Vertical" data-desc="1.5m Standard w/ Spigot" data-code="RV-C1500" oninput="highlight('RV-C1500')"><button class="qty-btn" onclick="inc('RV-C1500')">+</button></div></div>
+    <div class="item-row" id="row-RV-C2000"><div class="item-info"><div class="item-code">RV-C2000</div><div class="item-desc">2m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C2000')">−</button><input class="qty-val" type="number" id="RV-C2000" min="0" value="" data-section="Standards &amp; Vertical" data-desc="2m Standard w/ Spigot" data-code="RV-C2000" oninput="highlight('RV-C2000')"><button class="qty-btn" onclick="inc('RV-C2000')">+</button></div></div>
+    <div class="item-row" id="row-RV-C2500"><div class="item-info"><div class="item-code">RV-C2500</div><div class="item-desc">2.5m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C2500')">−</button><input class="qty-val" type="number" id="RV-C2500" min="0" value="" data-section="Standards &amp; Vertical" data-desc="2.5m Standard w/ Spigot" data-code="RV-C2500" oninput="highlight('RV-C2500')"><button class="qty-btn" onclick="inc('RV-C2500')">+</button></div></div>
+    <div class="item-row" id="row-RV-C3000"><div class="item-info"><div class="item-code">RV-C3000</div><div class="item-desc">3m Standard w/ Spigot</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RV-C3000')">−</button><input class="qty-val" type="number" id="RV-C3000" min="0" value="" data-section="Standards &amp; Vertical" data-desc="3m Standard w/ Spigot" data-code="RV-C3000" oninput="highlight('RV-C3000')"><button class="qty-btn" onclick="inc('RV-C3000')">+</button></div></div>
+  </div>
+
+  <!-- Ledgers -->
+  <div class="section-card">
+    <div class="section-title">Ledgers</div>
+    <div class="item-row" id="row-RL0650"><div class="item-info"><div class="item-code">RL0650</div><div class="item-desc">2'2" Ledger, Regular Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RL0650')">−</button><input class="qty-val" type="number" id="RL0650" min="0" value="" data-section="Ledgers" data-desc="2'2&quot; Ledger, Regular Head" data-code="RL0650" oninput="highlight('RL0650')"><button class="qty-btn" onclick="inc('RL0650')">+</button></div></div>
+    <div class="item-row" id="row-RL1065"><div class="item-info"><div class="item-code">RL1065</div><div class="item-desc">3'6" Ledger, Regular Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RL1065')">−</button><input class="qty-val" type="number" id="RL1065" min="0" value="" data-section="Ledgers" data-desc="3'6&quot; Ledger, Regular Head" data-code="RL1065" oninput="highlight('RL1065')"><button class="qty-btn" onclick="inc('RL1065')">+</button></div></div>
+    <div class="item-row" id="row-RL1150"><div class="item-info"><div class="item-code">RL1150</div><div class="item-desc">3'10" Ledger, Regular Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RL1150')">−</button><input class="qty-val" type="number" id="RL1150" min="0" value="" data-section="Ledgers" data-desc="3'10&quot; Ledger, Regular Head" data-code="RL1150" oninput="highlight('RL1150')"><button class="qty-btn" onclick="inc('RL1150')">+</button></div></div>
+    <div class="item-row" id="row-RL2130"><div class="item-info"><div class="item-code">RL2130</div><div class="item-desc">7' Ledger, Regular Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RL2130')">−</button><input class="qty-val" type="number" id="RL2130" min="0" value="" data-section="Ledgers" data-desc="7' Ledger, Regular Head" data-code="RL2130" oninput="highlight('RL2130')"><button class="qty-btn" onclick="inc('RL2130')">+</button></div></div>
+    <div class="item-row" id="row-RL3050"><div class="item-info"><div class="item-code">RL3050</div><div class="item-desc">10' Ledger, Regular Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RL3050')">−</button><input class="qty-val" type="number" id="RL3050" min="0" value="" data-section="Ledgers" data-desc="10' Ledger, Regular Head" data-code="RL3050" oninput="highlight('RL3050')"><button class="qty-btn" onclick="inc('RL3050')">+</button></div></div>
+    <div class="item-row" id="row-RLS1572"><div class="item-info"><div class="item-code">RLS1572</div><div class="item-desc">5'2" Ledger, Slim Head</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RLS1572')">−</button><input class="qty-val" type="number" id="RLS1572" min="0" value="" data-section="Ledgers" data-desc="5'2&quot; Ledger, Slim Head" data-code="RLS1572" oninput="highlight('RLS1572')"><button class="qty-btn" onclick="inc('RLS1572')">+</button></div></div>
+  </div>
+
+  <!-- Double Ledgers -->
+  <div class="section-card">
+    <div class="section-title">Double Ledgers</div>
+    <div class="item-row" id="row-RT-C1150"><div class="item-info"><div class="item-code">RT-C1150</div><div class="item-desc">3'10" Double Ledger</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RT-C1150')">−</button><input class="qty-val" type="number" id="RT-C1150" min="0" value="" data-section="Double Ledgers" data-desc="3'10&quot; Double Ledger" data-code="RT-C1150" oninput="highlight('RT-C1150')"><button class="qty-btn" onclick="inc('RT-C1150')">+</button></div></div>
+    <div class="item-row" id="row-RT-C2130"><div class="item-info"><div class="item-code">RT-C2130</div><div class="item-desc">7' Double Ledger</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RT-C2130')">−</button><input class="qty-val" type="number" id="RT-C2130" min="0" value="" data-section="Double Ledgers" data-desc="7' Double Ledger" data-code="RT-C2130" oninput="highlight('RT-C2130')"><button class="qty-btn" onclick="inc('RT-C2130')">+</button></div></div>
+    <div class="item-row" id="row-RT-C3050"><div class="item-info"><div class="item-code">RT-C3050</div><div class="item-desc">10' Double Ledger</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RT-C3050')">−</button><input class="qty-val" type="number" id="RT-C3050" min="0" value="" data-section="Double Ledgers" data-desc="10' Double Ledger" data-code="RT-C3050" oninput="highlight('RT-C3050')"><button class="qty-btn" onclick="inc('RT-C3050')">+</button></div></div>
+    <div class="item-row" id="row-RTS1572"><div class="item-info"><div class="item-code">RTS1572</div><div class="item-desc">5'2" Double Ledger</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RTS1572')">−</button><input class="qty-val" type="number" id="RTS1572" min="0" value="" data-section="Double Ledgers" data-desc="5'2&quot; Double Ledger" data-code="RTS1572" oninput="highlight('RTS1572')"><button class="qty-btn" onclick="inc('RTS1572')">+</button></div></div>
+  </div>
+
+  <!-- Toeboards -->
+  <div class="section-card">
+    <div class="section-title">Toeboards</div>
+    <div class="item-row" id="row-17229-0650"><div class="item-info"><div class="item-code">17229-0650</div><div class="item-desc">Toeboard 2'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-0650')">−</button><input class="qty-val" type="number" id="17229-0650" min="0" value="" data-section="Toeboards" data-desc="Toeboard 2'2&quot;" data-code="17229-0650" oninput="highlight('17229-0650')"><button class="qty-btn" onclick="inc('17229-0650')">+</button></div></div>
+    <div class="item-row" id="row-17229-1065a"><div class="item-info"><div class="item-code">17229-1065</div><div class="item-desc">Toeboard 3'6"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1065a')">−</button><input class="qty-val" type="number" id="17229-1065a" min="0" value="" data-section="Toeboards" data-desc="Toeboard 3'6&quot;" data-code="17229-1065" oninput="highlight('17229-1065a')"><button class="qty-btn" onclick="inc('17229-1065a')">+</button></div></div>
+    <div class="item-row" id="row-17229-1065b"><div class="item-info"><div class="item-code">17229-1065</div><div class="item-desc">Toeboard 3'10"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1065b')">−</button><input class="qty-val" type="number" id="17229-1065b" min="0" value="" data-section="Toeboards" data-desc="Toeboard 3'10&quot;" data-code="17229-1065" oninput="highlight('17229-1065b')"><button class="qty-btn" onclick="inc('17229-1065b')">+</button></div></div>
+    <div class="item-row" id="row-17229-1150"><div class="item-info"><div class="item-code">17229-1150</div><div class="item-desc">Toeboard 5'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1150')">−</button><input class="qty-val" type="number" id="17229-1150" min="0" value="" data-section="Toeboards" data-desc="Toeboard 5'2&quot;" data-code="17229-1150" oninput="highlight('17229-1150')"><button class="qty-btn" onclick="inc('17229-1150')">+</button></div></div>
+    <div class="item-row" id="row-17229-2130"><div class="item-info"><div class="item-code">17229-2130</div><div class="item-desc">Toeboard 7'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-2130')">−</button><input class="qty-val" type="number" id="17229-2130" min="0" value="" data-section="Toeboards" data-desc="Toeboard 7'" data-code="17229-2130" oninput="highlight('17229-2130')"><button class="qty-btn" onclick="inc('17229-2130')">+</button></div></div>
+    <div class="item-row" id="row-17229-3026"><div class="item-info"><div class="item-code">17229-3026</div><div class="item-desc">Toeboard 10'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-3026')">−</button><input class="qty-val" type="number" id="17229-3026" min="0" value="" data-section="Toeboards" data-desc="Toeboard 10'" data-code="17229-3026" oninput="highlight('17229-3026')"><button class="qty-btn" onclick="inc('17229-3026')">+</button></div></div>
+  </div>
+
+  <!-- Bay Braces -->
+  <div class="section-card">
+    <div class="section-title">Bay Braces</div>
+    <div class="item-row" id="row-RB-B200650"><div class="item-info"><div class="item-code">RB-B200650</div><div class="item-desc">2'2" × 2m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B200650')">−</button><input class="qty-val" type="number" id="RB-B200650" min="0" value="" data-section="Bay Braces" data-desc="2'2&quot; x 2m Bay Brace" data-code="RB-B200650" oninput="highlight('RB-B200650')"><button class="qty-btn" onclick="inc('RB-B200650')">+</button></div></div>
+    <div class="item-row" id="row-RB-B201065"><div class="item-info"><div class="item-code">RB-B201065</div><div class="item-desc">3'6" × 3m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B201065')">−</button><input class="qty-val" type="number" id="RB-B201065" min="0" value="" data-section="Bay Braces" data-desc="3'6&quot; x 3m Bay Brace" data-code="RB-B201065" oninput="highlight('RB-B201065')"><button class="qty-btn" onclick="inc('RB-B201065')">+</button></div></div>
+    <div class="item-row" id="row-RB-B201150"><div class="item-info"><div class="item-code">RB-B201150</div><div class="item-desc">3'10" × 2m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B201150')">−</button><input class="qty-val" type="number" id="RB-B201150" min="0" value="" data-section="Bay Braces" data-desc="3'10&quot; x 2m Bay Brace" data-code="RB-B201150" oninput="highlight('RB-B201150')"><button class="qty-btn" onclick="inc('RB-B201150')">+</button></div></div>
+    <div class="item-row" id="row-RB-B201572"><div class="item-info"><div class="item-code">RB-B201572</div><div class="item-desc">5'2" × 2m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B201572')">−</button><input class="qty-val" type="number" id="RB-B201572" min="0" value="" data-section="Bay Braces" data-desc="5'2&quot; x 2m Bay Brace" data-code="RB-B201572" oninput="highlight('RB-B201572')"><button class="qty-btn" onclick="inc('RB-B201572')">+</button></div></div>
+    <div class="item-row" id="row-RB-B202130"><div class="item-info"><div class="item-code">RB-B202130</div><div class="item-desc">7' × 2m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B202130')">−</button><input class="qty-val" type="number" id="RB-B202130" min="0" value="" data-section="Bay Braces" data-desc="7' x 2m Bay Brace" data-code="RB-B202130" oninput="highlight('RB-B202130')"><button class="qty-btn" onclick="inc('RB-B202130')">+</button></div></div>
+    <div class="item-row" id="row-RB-B203050"><div class="item-info"><div class="item-code">RB-B203050</div><div class="item-desc">10' × 2m Bay Brace</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RB-B203050')">−</button><input class="qty-val" type="number" id="RB-B203050" min="0" value="" data-section="Bay Braces" data-desc="10' x 2m Bay Brace" data-code="RB-B203050" oninput="highlight('RB-B203050')"><button class="qty-btn" onclick="inc('RB-B203050')">+</button></div></div>
+  </div>
+
+  <!-- Stair Components -->
+  <div class="section-card">
+    <div class="section-title">Stair Components</div>
+    <div class="item-row" id="row-14277.0"><div class="item-info"><div class="item-code">14277.0</div><div class="item-desc">Stair Stringer, EIW (2m × 7')</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('14277.0')">−</button><input class="qty-val" type="number" id="14277.0" min="0" value="" data-section="Stair Components" data-desc="Stair Stringer, EIW (2m x 7')" data-code="14277.0" oninput="highlight('14277.0')"><button class="qty-btn" onclick="inc('14277.0')">+</button></div></div>
+    <div class="item-row" id="row-60211A"><div class="item-info"><div class="item-code">60211A</div><div class="item-desc">Stair Stringer, Aluma (2m × 2.572m)</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('60211A')">−</button><input class="qty-val" type="number" id="60211A" min="0" value="" data-section="Stair Components" data-desc="Stair Stringer, Aluma (2m x 2.572m)" data-code="60211A" oninput="highlight('60211A')"><button class="qty-btn" onclick="inc('60211A')">+</button></div></div>
+    <div class="item-row" id="row-60212-1065"><div class="item-info"><div class="item-code">60212-1065</div><div class="item-desc">Stair Thread 3'6", Aluma</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('60212-1065')">−</button><input class="qty-val" type="number" id="60212-1065" min="0" value="" data-section="Stair Components" data-desc="Stair Thread 3'6&quot;, Aluma" data-code="60212-1065" oninput="highlight('60212-1065')"><button class="qty-btn" onclick="inc('60212-1065')">+</button></div></div>
+    <div class="item-row" id="row-60212-1150"><div class="item-info"><div class="item-code">60212-1150</div><div class="item-desc">Stair Thread 3'10", Aluma</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('60212-1150')">−</button><input class="qty-val" type="number" id="60212-1150" min="0" value="" data-section="Stair Components" data-desc="Stair Thread 3'10&quot;, Aluma" data-code="60212-1150" oninput="highlight('60212-1150')"><button class="qty-btn" onclick="inc('60212-1150')">+</button></div></div>
+    <div class="item-row" id="row-14278A-1065"><div class="item-info"><div class="item-code">14278A-1065</div><div class="item-desc">Stair Thread 3'6", EIW</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('14278A-1065')">−</button><input class="qty-val" type="number" id="14278A-1065" min="0" value="" data-section="Stair Components" data-desc="Stair Thread 3'6&quot;, EIW" data-code="14278A-1065" oninput="highlight('14278A-1065')"><button class="qty-btn" onclick="inc('14278A-1065')">+</button></div></div>
+    <div class="item-row" id="row-14278A-1150"><div class="item-info"><div class="item-code">14278A-1150</div><div class="item-desc">Stair Thread 3'10", EIW</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('14278A-1150')">−</button><input class="qty-val" type="number" id="14278A-1150" min="0" value="" data-section="Stair Components" data-desc="Stair Thread 3'10&quot;, EIW" data-code="14278A-1150" oninput="highlight('14278A-1150')"><button class="qty-btn" onclick="inc('14278A-1150')">+</button></div></div>
+  </div>
+
+  <!-- Trusses -->
+  <div class="section-card">
+    <div class="section-title">Trusses</div>
+    <div class="item-row" id="row-RD1572"><div class="item-info"><div class="item-code">RD1572</div><div class="item-desc">Truss, 5'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD1572')">−</button><input class="qty-val" type="number" id="RD1572" min="0" value="" data-section="Trusses" data-desc="Truss, 5'2&quot;" data-code="RD1572" oninput="highlight('RD1572')"><button class="qty-btn" onclick="inc('RD1572')">+</button></div></div>
+    <div class="item-row" id="row-RD2130"><div class="item-info"><div class="item-code">RD2130</div><div class="item-desc">Truss, 7'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD2130')">−</button><input class="qty-val" type="number" id="RD2130" min="0" value="" data-section="Trusses" data-desc="Truss, 7'" data-code="RD2130" oninput="highlight('RD2130')"><button class="qty-btn" onclick="inc('RD2130')">+</button></div></div>
+    <div class="item-row" id="row-RD3050"><div class="item-info"><div class="item-code">RD3050</div><div class="item-desc">Truss, 10'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD3050')">−</button><input class="qty-val" type="number" id="RD3050" min="0" value="" data-section="Trusses" data-desc="Truss, 10'" data-code="RD3050" oninput="highlight('RD3050')"><button class="qty-btn" onclick="inc('RD3050')">+</button></div></div>
+    <div class="item-row" id="row-RD3658"><div class="item-info"><div class="item-code">RD3658</div><div class="item-desc">Truss, 12'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD3658')">−</button><input class="qty-val" type="number" id="RD3658" min="0" value="" data-section="Trusses" data-desc="Truss, 12'" data-code="RD3658" oninput="highlight('RD3658')"><button class="qty-btn" onclick="inc('RD3658')">+</button></div></div>
+    <div class="item-row" id="row-RD4260"><div class="item-info"><div class="item-code">RD4260</div><div class="item-desc">Truss, 14'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD4260')">−</button><input class="qty-val" type="number" id="RD4260" min="0" value="" data-section="Trusses" data-desc="Truss, 14'" data-code="RD4260" oninput="highlight('RD4260')"><button class="qty-btn" onclick="inc('RD4260')">+</button></div></div>
+    <div class="item-row" id="row-RD4876"><div class="item-info"><div class="item-code">RD4876</div><div class="item-desc">Truss, 16'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD4876')">−</button><input class="qty-val" type="number" id="RD4876" min="0" value="" data-section="Trusses" data-desc="Truss, 16'" data-code="RD4876" oninput="highlight('RD4876')"><button class="qty-btn" onclick="inc('RD4876')">+</button></div></div>
+    <div class="item-row" id="row-RD5180"><div class="item-info"><div class="item-code">RD5180</div><div class="item-desc">Truss, 17'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD5180')">−</button><input class="qty-val" type="number" id="RD5180" min="0" value="" data-section="Trusses" data-desc="Truss, 17'" data-code="RD5180" oninput="highlight('RD5180')"><button class="qty-btn" onclick="inc('RD5180')">+</button></div></div>
+    <div class="item-row" id="row-RD6100"><div class="item-info"><div class="item-code">RD6100</div><div class="item-desc">Truss, 20'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD6100')">−</button><input class="qty-val" type="number" id="RD6100" min="0" value="" data-section="Trusses" data-desc="Truss, 20'" data-code="RD6100" oninput="highlight('RD6100')"><button class="qty-btn" onclick="inc('RD6100')">+</button></div></div>
+    <div class="item-row" id="row-RD6390"><div class="item-info"><div class="item-code">RD6390</div><div class="item-desc">Truss, 21'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RD6390')">−</button><input class="qty-val" type="number" id="RD6390" min="0" value="" data-section="Trusses" data-desc="Truss, 21'" data-code="RD6390" oninput="highlight('RD6390')"><button class="qty-btn" onclick="inc('RD6390')">+</button></div></div>
+  </div>
+
+  <!-- Steel & Infill Planks -->
+  <div class="section-card">
+    <div class="section-title">Steel &amp; Infill Planks</div>
+    <div class="item-row" id="row-GB240-0650"><div class="item-info"><div class="item-code">GB240-0650</div><div class="item-desc">Steel Plank 2'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('GB240-0650')">−</button><input class="qty-val" type="number" id="GB240-0650" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Steel Plank 2'2&quot;" data-code="GB240-0650" oninput="highlight('GB240-0650')"><button class="qty-btn" onclick="inc('GB240-0650')">+</button></div></div>
+    <div class="item-row" id="row-GB240-1065"><div class="item-info"><div class="item-code">GB240-1065</div><div class="item-desc">Steel Plank 3'6"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('GB240-1065')">−</button><input class="qty-val" type="number" id="GB240-1065" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Steel Plank 3'6&quot;" data-code="GB240-1065" oninput="highlight('GB240-1065')"><button class="qty-btn" onclick="inc('GB240-1065')">+</button></div></div>
+    <div class="item-row" id="row-GB240-1150"><div class="item-info"><div class="item-code">GB240-1150</div><div class="item-desc">Steel Plank 3'10"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('GB240-1150')">−</button><input class="qty-val" type="number" id="GB240-1150" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Steel Plank 3'10&quot;" data-code="GB240-1150" oninput="highlight('GB240-1150')"><button class="qty-btn" onclick="inc('GB240-1150')">+</button></div></div>
+    <div class="item-row" id="row-15213-0650"><div class="item-info"><div class="item-code">15213-0650</div><div class="item-desc">Infill Plank 2'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-0650')">−</button><input class="qty-val" type="number" id="15213-0650" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 2'2&quot;" data-code="15213-0650" oninput="highlight('15213-0650')"><button class="qty-btn" onclick="inc('15213-0650')">+</button></div></div>
+    <div class="item-row" id="row-15213-1065"><div class="item-info"><div class="item-code">15213-1065</div><div class="item-desc">Infill Plank 3'6"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-1065')">−</button><input class="qty-val" type="number" id="15213-1065" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 3'6&quot;" data-code="15213-1065" oninput="highlight('15213-1065')"><button class="qty-btn" onclick="inc('15213-1065')">+</button></div></div>
+    <div class="item-row" id="row-15213-1150"><div class="item-info"><div class="item-code">15213-1150</div><div class="item-desc">Infill Plank 3'10"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-1150')">−</button><input class="qty-val" type="number" id="15213-1150" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 3'10&quot;" data-code="15213-1150" oninput="highlight('15213-1150')"><button class="qty-btn" onclick="inc('15213-1150')">+</button></div></div>
+    <div class="item-row" id="row-15213-1572"><div class="item-info"><div class="item-code">15213-1572</div><div class="item-desc">Infill Plank 5'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-1572')">−</button><input class="qty-val" type="number" id="15213-1572" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 5'2&quot;" data-code="15213-1572" oninput="highlight('15213-1572')"><button class="qty-btn" onclick="inc('15213-1572')">+</button></div></div>
+    <div class="item-row" id="row-15213-2130"><div class="item-info"><div class="item-code">15213-2130</div><div class="item-desc">Infill Plank 7'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-2130')">−</button><input class="qty-val" type="number" id="15213-2130" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 7'" data-code="15213-2130" oninput="highlight('15213-2130')"><button class="qty-btn" onclick="inc('15213-2130')">+</button></div></div>
+    <div class="item-row" id="row-15213-3050"><div class="item-info"><div class="item-code">15213-3050</div><div class="item-desc">Infill Plank 10'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('15213-3050')">−</button><input class="qty-val" type="number" id="15213-3050" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Infill Plank 10'" data-code="15213-3050" oninput="highlight('15213-3050')"><button class="qty-btn" onclick="inc('15213-3050')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl04"><div class="item-info"><div class="item-code">Mtx-Lvl04</div><div class="item-desc">Plank 4' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl04')">−</button><input class="qty-val" type="number" id="Mtx-Lvl04" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 4' x 9.5&quot;" data-code="Mtx-Lvl04" oninput="highlight('Mtx-Lvl04')"><button class="qty-btn" onclick="inc('Mtx-Lvl04')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl05"><div class="item-info"><div class="item-code">Mtx-Lvl05</div><div class="item-desc">Plank 5' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl05')">−</button><input class="qty-val" type="number" id="Mtx-Lvl05" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 5' x 9.5&quot;" data-code="Mtx-Lvl05" oninput="highlight('Mtx-Lvl05')"><button class="qty-btn" onclick="inc('Mtx-Lvl05')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl06"><div class="item-info"><div class="item-code">Mtx-Lvl06</div><div class="item-desc">Plank 6' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl06')">−</button><input class="qty-val" type="number" id="Mtx-Lvl06" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 6' x 9.5&quot;" data-code="Mtx-Lvl06" oninput="highlight('Mtx-Lvl06')"><button class="qty-btn" onclick="inc('Mtx-Lvl06')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl08"><div class="item-info"><div class="item-code">Mtx-Lvl08</div><div class="item-desc">Plank 8' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl08')">−</button><input class="qty-val" type="number" id="Mtx-Lvl08" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 8' x 9.5&quot;" data-code="Mtx-Lvl08" oninput="highlight('Mtx-Lvl08')"><button class="qty-btn" onclick="inc('Mtx-Lvl08')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl10"><div class="item-info"><div class="item-code">Mtx-Lvl10</div><div class="item-desc">Plank 10' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl10')">−</button><input class="qty-val" type="number" id="Mtx-Lvl10" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 10' x 9.5&quot;" data-code="Mtx-Lvl10" oninput="highlight('Mtx-Lvl10')"><button class="qty-btn" onclick="inc('Mtx-Lvl10')">+</button></div></div>
+    <div class="item-row" id="row-Mtx-Lvl12"><div class="item-info"><div class="item-code">Mtx-Lvl12</div><div class="item-desc">Plank 12' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('Mtx-Lvl12')">−</button><input class="qty-val" type="number" id="Mtx-Lvl12" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 12' x 9.5&quot;" data-code="Mtx-Lvl12" oninput="highlight('Mtx-Lvl12')"><button class="qty-btn" onclick="inc('Mtx-Lvl12')">+</button></div></div>
+    <div class="item-row" id="row-MTX-LVL16"><div class="item-info"><div class="item-code">MTX-LVL16</div><div class="item-desc">Plank 16' × 9.5"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('MTX-LVL16')">−</button><input class="qty-val" type="number" id="MTX-LVL16" min="0" value="" data-section="Steel &amp; Infill Planks" data-desc="Plank 16' x 9.5&quot;" data-code="MTX-LVL16" oninput="highlight('MTX-LVL16')"><button class="qty-btn" onclick="inc('MTX-LVL16')">+</button></div></div>
+  </div>
+
+  <!-- Clamps & Connectors -->
+  <div class="section-card">
+    <div class="section-title">Clamps &amp; Connectors</div>
+    <div class="item-row" id="row-40504C"><div class="item-info"><div class="item-code">40504C</div><div class="item-desc">Spigot Half Clamp</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('40504C')">−</button><input class="qty-val" type="number" id="40504C" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="Spigot Half Clamp" data-code="40504C" oninput="highlight('40504C')"><button class="qty-btn" onclick="inc('40504C')">+</button></div></div>
+    <div class="item-row" id="row-CH4848"><div class="item-info"><div class="item-code">CH4848</div><div class="item-desc">HD Bolt Clamp Dual, Fixed</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('CH4848')">−</button><input class="qty-val" type="number" id="CH4848" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="HD Bolt Clamp Dual, Fixed" data-code="CH4848" oninput="highlight('CH4848')"><button class="qty-btn" onclick="inc('CH4848')">+</button></div></div>
+    <div class="item-row" id="row-CH4848X"><div class="item-info"><div class="item-code">CH4848X</div><div class="item-desc">HD Bolt Clamp Dual, Swivel</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('CH4848X')">−</button><input class="qty-val" type="number" id="CH4848X" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="HD Bolt Clamp Dual, Swivel" data-code="CH4848X" oninput="highlight('CH4848X')"><button class="qty-btn" onclick="inc('CH4848X')">+</button></div></div>
+    <div class="item-row" id="row-10217A"><div class="item-info"><div class="item-code">10217A</div><div class="item-desc">Rigid Beam Clamp</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('10217A')">−</button><input class="qty-val" type="number" id="10217A" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="Rigid Beam Clamp" data-code="10217A" oninput="highlight('10217A')"><button class="qty-btn" onclick="inc('10217A')">+</button></div></div>
+    <div class="item-row" id="row-CMPWR"><div class="item-info"><div class="item-code">CMPWR</div><div class="item-desc">Right Angle Wedge Clamp</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('CMPWR')">−</button><input class="qty-val" type="number" id="CMPWR" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="Right Angle Wedge Clamp" data-code="CMPWR" oninput="highlight('CMPWR')"><button class="qty-btn" onclick="inc('CMPWR')">+</button></div></div>
+    <div class="item-row" id="row-CMPWS"><div class="item-info"><div class="item-code">CMPWS</div><div class="item-desc">Swivel Wedge Clamp</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('CMPWS')">−</button><input class="qty-val" type="number" id="CMPWS" min="0" value="" data-section="Clamps &amp; Connectors" data-desc="Swivel Wedge Clamp" data-code="CMPWS" oninput="highlight('CMPWS')"><button class="qty-btn" onclick="inc('CMPWS')">+</button></div></div>
+  </div>
+
+  <!-- Side Brackets -->
+  <div class="section-card">
+    <div class="section-title">Side Brackets</div>
+    <div class="item-row" id="row-RJ0400"><div class="item-info"><div class="item-code">RJ0400</div><div class="item-desc">Side Bracket 0.4m</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ0400')">−</button><input class="qty-val" type="number" id="RJ0400" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket 0.4m" data-code="RJ0400" oninput="highlight('RJ0400')"><button class="qty-btn" onclick="inc('RJ0400')">+</button></div></div>
+    <div class="item-row" id="row-RJ0406"><div class="item-info"><div class="item-code">RJ0406</div><div class="item-desc">Side Bracket 1'4"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ0406')">−</button><input class="qty-val" type="number" id="RJ0406" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket 1'4&quot;" data-code="RJ0406" oninput="highlight('RJ0406')"><button class="qty-btn" onclick="inc('RJ0406')">+</button></div></div>
+    <div class="item-row" id="row-RJ0650"><div class="item-info"><div class="item-code">RJ0650</div><div class="item-desc">Side Bracket 2'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ0650')">−</button><input class="qty-val" type="number" id="RJ0650" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket 2'2&quot;" data-code="RJ0650" oninput="highlight('RJ0650')"><button class="qty-btn" onclick="inc('RJ0650')">+</button></div></div>
+    <div class="item-row" id="row-RJ0880"><div class="item-info"><div class="item-code">RJ0880</div><div class="item-desc">Side Bracket 2'10"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ0880')">−</button><input class="qty-val" type="number" id="RJ0880" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket 2'10&quot;" data-code="RJ0880" oninput="highlight('RJ0880')"><button class="qty-btn" onclick="inc('RJ0880')">+</button></div></div>
+    <div class="item-row" id="row-RJ1065"><div class="item-info"><div class="item-code">RJ1065</div><div class="item-desc">Side Bracket w/ Dbl Ledger Head 42"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ1065')">−</button><input class="qty-val" type="number" id="RJ1065" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket w/ Dbl Ledger Head 42&quot;" data-code="RJ1065" oninput="highlight('RJ1065')"><button class="qty-btn" onclick="inc('RJ1065')">+</button></div></div>
+    <div class="item-row" id="row-RJ1150"><div class="item-info"><div class="item-code">RJ1150</div><div class="item-desc">Side Bracket, Reinforced</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RJ1150')">−</button><input class="qty-val" type="number" id="RJ1150" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket, Reinforced" data-code="RJ1150" oninput="highlight('RJ1150')"><button class="qty-btn" onclick="inc('RJ1150')">+</button></div></div>
+    <div class="item-row" id="row-RK0305"><div class="item-info"><div class="item-code">RK0305</div><div class="item-desc">Side Bracket w/ Stop End</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RK0305')">−</button><input class="qty-val" type="number" id="RK0305" min="0" value="" data-section="Side Brackets" data-desc="Side Bracket w/ Stop End" data-code="RK0305" oninput="highlight('RK0305')"><button class="qty-btn" onclick="inc('RK0305')">+</button></div></div>
+  </div>
+
+  <!-- Jacks & Base Hardware -->
+  <div class="section-card">
+    <div class="section-title">Jacks &amp; Base Hardware</div>
+    <div class="item-row" id="row-DG3504A-hg"><div class="item-info"><div class="item-code">DG3504A-hg</div><div class="item-desc">Base Plate</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DG3504A-hg')">−</button><input class="qty-val" type="number" id="DG3504A-hg" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="Base Plate" data-code="DG3504A-hg" oninput="highlight('DG3504A-hg')"><button class="qty-btn" onclick="inc('DG3504A-hg')">+</button></div></div>
+    <div class="item-row" id="row-DZ35090-24"><div class="item-info"><div class="item-code">DZ35090-24</div><div class="item-desc">Base Jack 24" w/ Long Nut &amp; Plate</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DZ35090-24')">−</button><input class="qty-val" type="number" id="DZ35090-24" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="Base Jack 24&quot; w/ Long Nut &amp; Plate" data-code="DZ35090-24" oninput="highlight('DZ35090-24')"><button class="qty-btn" onclick="inc('DZ35090-24')">+</button></div></div>
+    <div class="item-row" id="row-DZ35090-36"><div class="item-info"><div class="item-code">DZ35090-36</div><div class="item-desc">Base Jack 36" w/ Long Nut &amp; Plate</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DZ35090-36')">−</button><input class="qty-val" type="number" id="DZ35090-36" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="Base Jack 36&quot; w/ Long Nut &amp; Plate" data-code="DZ35090-36" oninput="highlight('DZ35090-36')"><button class="qty-btn" onclick="inc('DZ35090-36')">+</button></div></div>
+    <div class="item-row" id="row-DZX35037"><div class="item-info"><div class="item-code">DZX35037</div><div class="item-desc">Swivel Base Jack 24" w/ Plate</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DZX35037')">−</button><input class="qty-val" type="number" id="DZX35037" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="Swivel Base Jack 24&quot; w/ Plate" data-code="DZX35037" oninput="highlight('DZX35037')"><button class="qty-btn" onclick="inc('DZX35037')">+</button></div></div>
+    <div class="item-row" id="row-DZ35055"><div class="item-info"><div class="item-code">DZ35055</div><div class="item-desc">24" Socket Jack w/ Long Nut</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DZ35055')">−</button><input class="qty-val" type="number" id="DZ35055" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="24&quot; Socket Jack w/ Long Nut" data-code="DZ35055" oninput="highlight('DZ35055')"><button class="qty-btn" onclick="inc('DZ35055')">+</button></div></div>
+    <div class="item-row" id="row-DT68358"><div class="item-info"><div class="item-code">DT68358</div><div class="item-desc">U-Head Screw Jack w/ Long Nut</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('DT68358')">−</button><input class="qty-val" type="number" id="DT68358" min="0" value="" data-section="Jacks &amp; Base Hardware" data-desc="U-Head Screw Jack w/ Long Nut" data-code="DT68358" oninput="highlight('DT68358')"><button class="qty-btn" onclick="inc('DT68358')">+</button></div></div>
+  </div>
+
+  <!-- Arms, Rails & Gates -->
+  <div class="section-card">
+    <div class="section-title">Arms, Rails &amp; Gates</div>
+    <div class="item-row" id="row-RF19"><div class="item-info"><div class="item-code">RF19</div><div class="item-desc">Davit Arm</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RF19')">−</button><input class="qty-val" type="number" id="RF19" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Davit Arm" data-code="RF19" oninput="highlight('RF19')"><button class="qty-btn" onclick="inc('RF19')">+</button></div></div>
+    <div class="item-row" id="row-RF20"><div class="item-info"><div class="item-code">RF20</div><div class="item-desc">Davit Arm — Reinforced</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RF20')">−</button><input class="qty-val" type="number" id="RF20" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Davit Arm - Reinforced" data-code="RF20" oninput="highlight('RF20')"><button class="qty-btn" onclick="inc('RF20')">+</button></div></div>
+    <div class="item-row" id="row-RA01"><div class="item-info"><div class="item-code">RA01</div><div class="item-desc">Lock Arm</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RA01')">−</button><input class="qty-val" type="number" id="RA01" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Lock Arm" data-code="RA01" oninput="highlight('RA01')"><button class="qty-btn" onclick="inc('RA01')">+</button></div></div>
+    <div class="item-row" id="row-RA61"><div class="item-info"><div class="item-code">RA61</div><div class="item-desc">Lock Arm — Rectangular Tube</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RA61')">−</button><input class="qty-val" type="number" id="RA61" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Lock Arm - Rectangular Tube" data-code="RA61" oninput="highlight('RA61')"><button class="qty-btn" onclick="inc('RA61')">+</button></div></div>
+    <div class="item-row" id="row-RP1652"><div class="item-info"><div class="item-code">RP1652</div><div class="item-desc">Guardrail Standard</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('RP1652')">−</button><input class="qty-val" type="number" id="RP1652" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Guardrail Standard" data-code="RP1652" oninput="highlight('RP1652')"><button class="qty-btn" onclick="inc('RP1652')">+</button></div></div>
+    <div class="item-row" id="row-HM1524A"><div class="item-info"><div class="item-code">HM1524A</div><div class="item-desc">Extensible Swing Gate 3'–5'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('HM1524A')">−</button><input class="qty-val" type="number" id="HM1524A" min="0" value="" data-section="Arms, Rails &amp; Gates" data-desc="Extensible Swing Gate 3'-5'" data-code="HM1524A" oninput="highlight('HM1524A')"><button class="qty-btn" onclick="inc('HM1524A')">+</button></div></div>
+  </div>
+
+  <!-- Decks -->
+  <div class="section-card">
+    <div class="section-title">Decks</div>
+    <div class="item-row" id="row-B19-10"><div class="item-info"><div class="item-code">B19-10</div><div class="item-desc">Deck (10' × 19")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B19-10')">−</button><input class="qty-val" type="number" id="B19-10" min="0" value="" data-section="Decks" data-desc="Deck (10' x 19&quot;)" data-code="B19-10" oninput="highlight('B19-10')"><button class="qty-btn" onclick="inc('B19-10')">+</button></div></div>
+    <div class="item-row" id="row-B19-22AF"><div class="item-info"><div class="item-code">B19-22AF</div><div class="item-desc">Deck (2'2" × 19")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B19-22AF')">−</button><input class="qty-val" type="number" id="B19-22AF" min="0" value="" data-section="Decks" data-desc="Deck (2'2&quot; x 19&quot;)" data-code="B19-22AF" oninput="highlight('B19-22AF')"><button class="qty-btn" onclick="inc('B19-22AF')">+</button></div></div>
+    <div class="item-row" id="row-B19-310AF"><div class="item-info"><div class="item-code">B19-310AF</div><div class="item-desc">Deck (3'10" × 19")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B19-310AF')">−</button><input class="qty-val" type="number" id="B19-310AF" min="0" value="" data-section="Decks" data-desc="Deck (3'10&quot; x 19&quot;)" data-code="B19-310AF" oninput="highlight('B19-310AF')"><button class="qty-btn" onclick="inc('B19-310AF')">+</button></div></div>
+    <div class="item-row" id="row-B19-52GF"><div class="item-info"><div class="item-code">B19-52GF</div><div class="item-desc">Deck (5'2" × 19")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B19-52GF')">−</button><input class="qty-val" type="number" id="B19-52GF" min="0" value="" data-section="Decks" data-desc="Deck (5'2&quot; x 19&quot;)" data-code="B19-52GF" oninput="highlight('B19-52GF')"><button class="qty-btn" onclick="inc('B19-52GF')">+</button></div></div>
+    <div class="item-row" id="row-B19-7"><div class="item-info"><div class="item-code">B19-7</div><div class="item-desc">Deck (7' × 19")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B19-7')">−</button><input class="qty-val" type="number" id="B19-7" min="0" value="" data-section="Decks" data-desc="Deck (7' x 19&quot;)" data-code="B19-7" oninput="highlight('B19-7')"><button class="qty-btn" onclick="inc('B19-7')">+</button></div></div>
+    <div class="item-row" id="row-B95-2130"><div class="item-info"><div class="item-code">B95-2130</div><div class="item-desc">Deck (7' × 9.5")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B95-2130')">−</button><input class="qty-val" type="number" id="B95-2130" min="0" value="" data-section="Decks" data-desc="Deck (7' x 9.5&quot;)" data-code="B95-2130" oninput="highlight('B95-2130')"><button class="qty-btn" onclick="inc('B95-2130')">+</button></div></div>
+    <div class="item-row" id="row-B95-310YF"><div class="item-info"><div class="item-code">B95-310YF</div><div class="item-desc">Deck (3'10" × 9.5")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B95-310YF')">−</button><input class="qty-val" type="number" id="B95-310YF" min="0" value="" data-section="Decks" data-desc="Deck (3'10&quot; x 9.5&quot;)" data-code="B95-310YF" oninput="highlight('B95-310YF')"><button class="qty-btn" onclick="inc('B95-310YF')">+</button></div></div>
+    <div class="item-row" id="row-B95-52AF"><div class="item-info"><div class="item-code">B95-52AF</div><div class="item-desc">Deck (5'2" × 9.5")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B95-52AF')">−</button><input class="qty-val" type="number" id="B95-52AF" min="0" value="" data-section="Decks" data-desc="Deck (5'2&quot; x 9.5&quot;)" data-code="B95-52AF" oninput="highlight('B95-52AF')"><button class="qty-btn" onclick="inc('B95-52AF')">+</button></div></div>
+    <div class="item-row" id="row-B95-10"><div class="item-info"><div class="item-code">B95-10</div><div class="item-desc">Deck (10' × 9.5")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('B95-10')">−</button><input class="qty-val" type="number" id="B95-10" min="0" value="" data-section="Decks" data-desc="Deck (10' x 9.5&quot;)" data-code="B95-10" oninput="highlight('B95-10')"><button class="qty-btn" onclick="inc('B95-10')">+</button></div></div>
+  </div>
+
+  <!-- Consumables -->
+  <div class="section-card">
+    <div class="section-title">Consumables</div>
+    <div class="item-row" id="row-LUM204"><div class="item-info"><div class="item-code">LUM204</div><div class="item-desc">Lumber (2×4)</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('LUM204')">−</button><input class="qty-val" type="number" id="LUM204" min="0" value="" data-section="Consumables" data-desc="Lumber (2x4)" data-code="LUM204" oninput="highlight('LUM204')"><button class="qty-btn" onclick="inc('LUM204')">+</button></div></div>
+    <div class="item-row" id="row-LUM206"><div class="item-info"><div class="item-code">LUM206</div><div class="item-desc">Lumber (2×6)</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('LUM206')">−</button><input class="qty-val" type="number" id="LUM206" min="0" value="" data-section="Consumables" data-desc="Lumber (2x6)" data-code="LUM206" oninput="highlight('LUM206')"><button class="qty-btn" onclick="inc('LUM206')">+</button></div></div>
+    <div class="item-row" id="row-MS20"><div class="item-info"><div class="item-code">MS20</div><div class="item-desc">Mudsill (20")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('MS20')">−</button><input class="qty-val" type="number" id="MS20" min="0" value="" data-section="Consumables" data-desc="Mudsill (20&quot;)" data-code="MS20" oninput="highlight('MS20')"><button class="qty-btn" onclick="inc('MS20')">+</button></div></div>
+    <div class="item-row" id="row-MS30"><div class="item-info"><div class="item-code">MS30</div><div class="item-desc">Mudsill (30")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('MS30')">−</button><input class="qty-val" type="number" id="MS30" min="0" value="" data-section="Consumables" data-desc="Mudsill (30&quot;)" data-code="MS30" oninput="highlight('MS30')"><button class="qty-btn" onclick="inc('MS30')">+</button></div></div>
+    <div class="item-row" id="row-WOOD24"><div class="item-info"><div class="item-code">WOOD24</div><div class="item-desc">Plywood (2×4)</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('WOOD24')">−</button><input class="qty-val" type="number" id="WOOD24" min="0" value="" data-section="Consumables" data-desc="Plywood (2x4)" data-code="WOOD24" oninput="highlight('WOOD24')"><button class="qty-btn" onclick="inc('WOOD24')">+</button></div></div>
+    <div class="item-row" id="row-WOOD48"><div class="item-info"><div class="item-code">WOOD48</div><div class="item-desc">Plywood (4×8)</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('WOOD48')">−</button><input class="qty-val" type="number" id="WOOD48" min="0" value="" data-section="Consumables" data-desc="Plywood (4x8)" data-code="WOOD48" oninput="highlight('WOOD48')"><button class="qty-btn" onclick="inc('WOOD48')">+</button></div></div>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes-card">
+    <div class="notes-title">Notes / Special Instructions</div>
+    <textarea id="notes-field" class="notes-textarea" placeholder="Enter any notes or special instructions..."></textarea>
+  </div>
+
+</div><!-- /content -->
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <button class="btn btn-clear" onclick="clearForm()">Clear</button>
+  <button class="btn btn-submit" onclick="generateSummary()">Review &amp; Submit</button>
+</div>
+
+<!-- SUMMARY OVERLAY -->
+<div id="summary-overlay">
+  <div class="summary-header">
+    <h2>Order Summary</h2>
+    <div class="summary-meta">
+      <div class="meta-item"><div class="meta-label">Project</div><div class="meta-val" id="sum-project">—</div></div>
+      <div class="meta-item"><div class="meta-label">Delivery Date</div><div class="meta-val" id="sum-date">—</div></div>
+      <div class="meta-item"><div class="meta-label">Time</div><div class="meta-val" id="sum-time">—</div></div>
+    </div>
+  </div>
+  <div class="summary-body" id="summary-body"></div>
+  <div class="summary-bottom">
+    <button class="btn btn-back" onclick="closeSummary()">← Back</button>
+    <button class="btn btn-save" onclick="savePDF()">Save as PDF</button>
+  </div>
+</div>
+
+<script>
+  function inc(id) {
+    const el = document.getElementById(id);
+    el.value = (parseInt(el.value) || 0) + 1;
+    highlight(id);
+  }
+
+  function dec(id) {
+    const el = document.getElementById(id);
+    const val = (parseInt(el.value) || 0) - 1;
+    el.value = val > 0 ? val : '';
+    highlight(id);
+  }
+
+  function highlight(id) {
+    const el  = document.getElementById(id);
+    const row = document.getElementById('row-' + id);
+    if (row) row.classList.toggle('has-qty', !!(parseInt(el.value) > 0));
+  }
+
+  function clearForm() {
+    if (!confirm('Clear all quantities and fields?')) return;
+    document.querySelectorAll('.qty-val').forEach(i => { i.value = ''; });
+    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('has-qty'));
+    document.getElementById('notes-field').value = '';
+    document.getElementById('project-name').value = '';
+    document.getElementById('delivery-date').value = '';
+    document.getElementById('delivery-time').value = '';
+  }
+
+  function generateSummary() {
+    const project = document.getElementById('project-name').value.trim() || 'Unnamed Project';
+    const date    = document.getElementById('delivery-date').value.trim() || '—';
+    const time    = document.getElementById('delivery-time').value.trim() || '—';
+    const notes   = document.getElementById('notes-field').value.trim();
+
+    const sections = {};
+    document.querySelectorAll('.qty-val').forEach(input => {
+      const qty = parseInt(input.value);
+      if (!isNaN(qty) && qty > 0) {
+        const sec = input.dataset.section;
+        if (!sections[sec]) sections[sec] = [];
+        sections[sec].push({ code: input.dataset.code, desc: input.dataset.desc, qty });
+      }
+    });
+
+    if (Object.keys(sections).length === 0) {
+      alert('No quantities entered yet. Add at least one item before submitting.');
+      return;
+    }
+
+    document.getElementById('sum-project').textContent = project;
+    document.getElementById('sum-date').textContent    = date;
+    document.getElementById('sum-time').textContent    = time;
+
+    let html = '';
+    for (const [sec, items] of Object.entries(sections)) {
+      html += `<div class="summary-section"><div class="summary-sec-hd">${sec}</div>`;
+      items.forEach(item => {
+        html += `<div class="summary-item">
+          <div class="summary-item-left">
+            <div class="summary-item-code">${item.code}</div>
+            <div class="summary-item-desc">${item.desc}</div>
+          </div>
+          <div class="summary-item-qty">${item.qty}</div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    if (notes) {
+      html += `<div class="summary-notes">
+        <div class="summary-notes-label">Notes / Special Instructions</div>
+        <div class="summary-notes-text">${notes}</div>
+      </div>`;
+    }
+
+    document.getElementById('summary-body').innerHTML = html;
+    document.getElementById('summary-overlay').classList.add('active');
+    document.getElementById('summary-overlay').scrollTop = 0;
+    window._pdfData = { project, date, time, notes, sections };
+  }
+
+  function closeSummary() {
+    document.getElementById('summary-overlay').classList.remove('active');
+  }
+
+  function savePDF() {
+    const { project, date, time, notes, sections } = window._pdfData;
+    const safeName = project.replace(/[^a-z0-9]/gi, '_');
+    const safeDate = date.replace(/[^a-z0-9]/gi, '-');
+    const filename  = safeName + '_' + safeDate + '.html';
+
+    let rows = '';
+    for (const [sec, items] of Object.entries(sections)) {
+      rows += `<tr><td colspan="3" style="background:#17222f;color:#fff;font-size:9pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 10px;border-left:3px solid #e5500b;">${sec}</td></tr>`;
+      items.forEach((item, i) => {
+        const bg = i % 2 === 0 ? '#ffffff' : '#f4f5f7';
+        rows += `<tr style="background:${bg};">
+          <td style="font-size:8pt;font-weight:700;color:#555;padding:5px 10px;border-bottom:1px solid #eee;white-space:nowrap;">${item.code}</td>
+          <td style="font-size:10pt;font-weight:700;color:#1e2730;padding:5px 10px;border-bottom:1px solid #eee;">${item.desc}</td>
+          <td style="font-size:13pt;font-weight:800;color:#e5500b;padding:5px 10px;border-bottom:1px solid #eee;text-align:right;">${item.qty}</td>
+        </tr>`;
+      });
+    }
+
+    const notesHtml = notes ? `<div style="margin-top:18px;border:1px solid #ccc;border-radius:4px;padding:12px 14px;background:#f9f9f9;">
+      <div style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:5px;">Notes / Special Instructions</div>
+      <div style="font-size:10pt;color:#1e2730;">${notes}</div>
+    </div>` : '';
+
+    const html = `<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${safeName}_${safeDate}</title>
+<style>
+  @page { size: letter portrait; margin: 0.45in; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Arial, sans-serif; background:#fff; padding:16px; }
+  .no-print { display:block; }
+  @media print { .no-print { display:none !important; } body { padding:0; } }
+</style>
+</head><body>
+<div style="background:#17222f;color:#fff;padding:14px 18px 10px;border-bottom:3px solid #e5500b;margin-bottom:16px;">
+  <div style="font-size:18pt;font-weight:800;line-height:1;">L&A Scaffolding &mdash; Material Order</div>
+  <div style="display:flex;gap:20px;margin-top:6px;flex-wrap:wrap;">
+    <span style="font-size:9pt;color:#aab;">Project: <strong style="color:#fff;">${project}</strong></span>
+    <span style="font-size:9pt;color:#aab;">Delivery: <strong style="color:#fff;">${date}</strong></span>
+    <span style="font-size:9pt;color:#aab;">Time: <strong style="color:#fff;">${time}</strong></span>
+  </div>
+</div>
+<div class="no-print" style="display:flex;gap:10px;margin-bottom:14px;">
+  <button onclick="window.print()" style="flex:1;background:#e5500b;color:#fff;border:none;padding:13px;font-size:13pt;font-weight:700;border-radius:6px;cursor:pointer;">Save as PDF</button>
+</div>
+<table style="width:100%;border-collapse:collapse;">
+  <thead><tr>
+    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Code</th>
+    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Description</th>
+    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:right;">Qty</th>
+  </tr></thead>
+  <tbody>${rows}</tbody>
+</table>
+${notesHtml}
+<div style="margin-top:20px;border-top:1.5px solid #17222f;padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+  <span style="font-size:6.5pt;color:#999;">L&A Scaffolding &mdash; Confirm codes with supplier prior to dispatch.</span>
+  <span style="font-size:9pt;font-weight:800;color:#17222f;">L<span style="color:#e5500b;">&amp;</span>A SCAFFOLDING</span>
+</div>
+</body></html>`;
+
+    // Use Blob + anchor download — works on iOS Safari, Android Chrome, all mobile browsers
+    try {
+      const blob = new Blob([html], { type: 'text/html' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+    } catch(e) {
+      // Fallback: open as data URI (older iOS)
+      const encoded = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+      window.location.href = encoded;
+    }
+  }
+</script>
+
+</body>
+</html>
