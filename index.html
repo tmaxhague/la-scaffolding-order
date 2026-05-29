@@ -417,9 +417,18 @@
   }
   .empty-state .icon { font-size: 40px; margin-bottom: 10px; }
   .empty-state p { font-size: 15px; font-weight: 500; }
+
+  #print-content { display: none; }
+  @media print {
+    body > *:not(#print-content) { display: none !important; }
+    #print-content { display: block !important; }
+    @page { size: letter portrait; margin: 0.45in; }
+  }
 </style>
 </head>
 <body>
+
+<div id="print-content"></div>
 
 <!-- HEADER -->
 <div class="app-header">
@@ -485,22 +494,22 @@
     <div class="item-row" id="row-TUBE4"><div class="item-info"><div class="item-code">TUBE4</div><div class="item-desc">OD Plain End Tube (4' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE4')">−</button><input class="qty-val" type="number" id="TUBE4" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (4' x 1.9&quot;)" data-code="TUBE4" oninput="highlight('TUBE4')"><button class="qty-btn" onclick="inc('TUBE4')">+</button></div></div>
     <div class="item-row" id="row-TUBE6"><div class="item-info"><div class="item-code">TUBE6</div><div class="item-desc">OD Plain End Tube (6' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE6')">−</button><input class="qty-val" type="number" id="TUBE6" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (6' x 1.9&quot;)" data-code="TUBE6" oninput="highlight('TUBE6')"><button class="qty-btn" onclick="inc('TUBE6')">+</button></div></div>
     <div class="item-row" id="row-TUBE8"><div class="item-info"><div class="item-code">TUBE8</div><div class="item-desc">OD Plain End Tube (8' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE8')">−</button><input class="qty-val" type="number" id="TUBE8" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (8' x 1.9&quot;)" data-code="TUBE8" oninput="highlight('TUBE8')"><button class="qty-btn" onclick="inc('TUBE8')">+</button></div></div>
-    <div class="item-row" id="row-TUBE2b"><div class="item-info"><div class="item-code">TUBE2</div><div class="item-desc">OD Plain End Tube (10' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE2b')">−</button><input class="qty-val" type="number" id="TUBE2b" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (10' x 1.9&quot;)" data-code="TUBE2" oninput="highlight('TUBE2b')"><button class="qty-btn" onclick="inc('TUBE2b')">+</button></div></div>
+    <div class="item-row" id="row-TUBE2b"><div class="item-info"><div class="item-code">TUBE10</div><div class="item-desc">OD Plain End Tube (10' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE2b')">−</button><input class="qty-val" type="number" id="TUBE2b" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (10' x 1.9&quot;)" data-code="TUBE10" oninput="highlight('TUBE2b')"><button class="qty-btn" onclick="inc('TUBE2b')">+</button></div></div>
     <div class="item-row" id="row-TUBE12"><div class="item-info"><div class="item-code">TUBE12</div><div class="item-desc">OD Plain End Tube (12' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE12')">−</button><input class="qty-val" type="number" id="TUBE12" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (12' x 1.9&quot;)" data-code="TUBE12" oninput="highlight('TUBE12')"><button class="qty-btn" onclick="inc('TUBE12')">+</button></div></div>
     <div class="item-row" id="row-TUBE14"><div class="item-info"><div class="item-code">TUBE14</div><div class="item-desc">OD Plain End Tube (14' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE14')">−</button><input class="qty-val" type="number" id="TUBE14" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (14' x 1.9&quot;)" data-code="TUBE14" oninput="highlight('TUBE14')"><button class="qty-btn" onclick="inc('TUBE14')">+</button></div></div>
     <div class="item-row" id="row-TUBE16"><div class="item-info"><div class="item-code">TUBE16</div><div class="item-desc">OD Plain End Tube (16' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE16')">−</button><input class="qty-val" type="number" id="TUBE16" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (16' x 1.9&quot;)" data-code="TUBE16" oninput="highlight('TUBE16')"><button class="qty-btn" onclick="inc('TUBE16')">+</button></div></div>
+    <div class="item-row" id="row-TUBE18"><div class="item-info"><div class="item-code">TUBE18</div><div class="item-desc">OD Plain End Tube (18' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE18')">−</button><input class="qty-val" type="number" id="TUBE18" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (18' x 1.9&quot;)" data-code="TUBE18" oninput="highlight('TUBE18')"><button class="qty-btn" onclick="inc('TUBE18')">+</button></div></div>
     <div class="item-row" id="row-TUBE20"><div class="item-info"><div class="item-code">TUBE20</div><div class="item-desc">OD Plain End Tube (20' × 1.9")</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TUBE20')">−</button><input class="qty-val" type="number" id="TUBE20" min="0" value="" data-section="Tubes" data-desc="OD Plain End Tube (20' x 1.9&quot;)" data-code="TUBE20" oninput="highlight('TUBE20')"><button class="qty-btn" onclick="inc('TUBE20')">+</button></div></div>
   </div>
 
   <!-- Toeboards -->
   <div class="section-card">
     <div class="section-title">Toeboards</div>
-    <div class="item-row" id="row-17229-0650"><div class="item-info"><div class="item-code">17229-0650</div><div class="item-desc">Toeboard 2'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-0650')">−</button><input class="qty-val" type="number" id="17229-0650" min="0" value="" data-section="Toeboards" data-desc="Toeboard 2'2&quot;" data-code="17229-0650" oninput="highlight('17229-0650')"><button class="qty-btn" onclick="inc('17229-0650')">+</button></div></div>
-    <div class="item-row" id="row-17229-1065a"><div class="item-info"><div class="item-code">17229-1065</div><div class="item-desc">Toeboard 3'6"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1065a')">−</button><input class="qty-val" type="number" id="17229-1065a" min="0" value="" data-section="Toeboards" data-desc="Toeboard 3'6&quot;" data-code="17229-1065" oninput="highlight('17229-1065a')"><button class="qty-btn" onclick="inc('17229-1065a')">+</button></div></div>
-    <div class="item-row" id="row-17229-1065b"><div class="item-info"><div class="item-code">17229-1065</div><div class="item-desc">Toeboard 3'10"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1065b')">−</button><input class="qty-val" type="number" id="17229-1065b" min="0" value="" data-section="Toeboards" data-desc="Toeboard 3'10&quot;" data-code="17229-1065" oninput="highlight('17229-1065b')"><button class="qty-btn" onclick="inc('17229-1065b')">+</button></div></div>
-    <div class="item-row" id="row-17229-1150"><div class="item-info"><div class="item-code">17229-1150</div><div class="item-desc">Toeboard 5'2"</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-1150')">−</button><input class="qty-val" type="number" id="17229-1150" min="0" value="" data-section="Toeboards" data-desc="Toeboard 5'2&quot;" data-code="17229-1150" oninput="highlight('17229-1150')"><button class="qty-btn" onclick="inc('17229-1150')">+</button></div></div>
-    <div class="item-row" id="row-17229-2130"><div class="item-info"><div class="item-code">17229-2130</div><div class="item-desc">Toeboard 7'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-2130')">−</button><input class="qty-val" type="number" id="17229-2130" min="0" value="" data-section="Toeboards" data-desc="Toeboard 7'" data-code="17229-2130" oninput="highlight('17229-2130')"><button class="qty-btn" onclick="inc('17229-2130')">+</button></div></div>
-    <div class="item-row" id="row-17229-3026"><div class="item-info"><div class="item-code">17229-3026</div><div class="item-desc">Toeboard 10'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('17229-3026')">−</button><input class="qty-val" type="number" id="17229-3026" min="0" value="" data-section="Toeboards" data-desc="Toeboard 10'" data-code="17229-3026" oninput="highlight('17229-3026')"><button class="qty-btn" onclick="inc('17229-3026')">+</button></div></div>
+    <div class="item-row" id="row-TB04"><div class="item-info"><div class="item-code">TB04</div><div class="item-desc">Toeboard 4'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TB04')">−</button><input class="qty-val" type="number" id="TB04" min="0" value="" data-section="Toeboards" data-desc="Toeboard 4'" data-code="TB04" oninput="highlight('TB04')"><button class="qty-btn" onclick="inc('TB04')">+</button></div></div>
+    <div class="item-row" id="row-TB06"><div class="item-info"><div class="item-code">TB06</div><div class="item-desc">Toeboard 6'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TB06')">−</button><input class="qty-val" type="number" id="TB06" min="0" value="" data-section="Toeboards" data-desc="Toeboard 6'" data-code="TB06" oninput="highlight('TB06')"><button class="qty-btn" onclick="inc('TB06')">+</button></div></div>
+    <div class="item-row" id="row-TB08"><div class="item-info"><div class="item-code">TB08</div><div class="item-desc">Toeboard 8'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TB08')">−</button><input class="qty-val" type="number" id="TB08" min="0" value="" data-section="Toeboards" data-desc="Toeboard 8'" data-code="TB08" oninput="highlight('TB08')"><button class="qty-btn" onclick="inc('TB08')">+</button></div></div>
+    <div class="item-row" id="row-TB10"><div class="item-info"><div class="item-code">TB10</div><div class="item-desc">Toeboard 10'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TB10')">−</button><input class="qty-val" type="number" id="TB10" min="0" value="" data-section="Toeboards" data-desc="Toeboard 10'" data-code="TB10" oninput="highlight('TB10')"><button class="qty-btn" onclick="inc('TB10')">+</button></div></div>
+    <div class="item-row" id="row-TB12"><div class="item-info"><div class="item-code">TB12</div><div class="item-desc">Toeboard 12'</div></div><div class="qty-control"><button class="qty-btn" onclick="dec('TB12')">−</button><input class="qty-val" type="number" id="TB12" min="0" value="" data-section="Toeboards" data-desc="Toeboard 12'" data-code="TB12" oninput="highlight('TB12')"><button class="qty-btn" onclick="inc('TB12')">+</button></div></div>
   </div>
 
   <!-- Bay Braces -->
@@ -782,9 +791,6 @@
 
   function savePDF() {
     const { project, date, time, notes, sections } = window._pdfData;
-    const safeName = project.replace(/[^a-z0-9]/gi, '_');
-    const safeDate = date.replace(/[^a-z0-9]/gi, '-');
-    const filename  = safeName + '_' + safeDate + '.html';
 
     let rows = '';
     for (const [sec, items] of Object.entries(sections)) {
@@ -804,59 +810,34 @@
       <div style="font-size:10pt;color:#1e2730;">${notes}</div>
     </div>` : '';
 
-    const html = `<!DOCTYPE html><html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${safeName}_${safeDate}</title>
-<style>
-  @page { size: letter portrait; margin: 0.45in; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: Arial, sans-serif; background:#fff; padding:16px; }
-  .no-print { display:block; }
-  @media print { .no-print { display:none !important; } body { padding:0; } }
-</style>
-</head><body>
-<div style="background:#17222f;color:#fff;padding:14px 18px 10px;border-bottom:3px solid #e5500b;margin-bottom:16px;">
-  <div style="font-size:18pt;font-weight:800;line-height:1;">L&A Scaffolding &mdash; Material Order</div>
-  <div style="display:flex;gap:20px;margin-top:6px;flex-wrap:wrap;">
-    <span style="font-size:9pt;color:#aab;">Project: <strong style="color:#fff;">${project}</strong></span>
-    <span style="font-size:9pt;color:#aab;">Delivery: <strong style="color:#fff;">${date}</strong></span>
-    <span style="font-size:9pt;color:#aab;">Time: <strong style="color:#fff;">${time}</strong></span>
-  </div>
-</div>
-<div class="no-print" style="display:flex;gap:10px;margin-bottom:14px;">
-  <button onclick="window.print()" style="flex:1;background:#e5500b;color:#fff;border:none;padding:13px;font-size:13pt;font-weight:700;border-radius:6px;cursor:pointer;">Save as PDF</button>
-</div>
-<table style="width:100%;border-collapse:collapse;">
-  <thead><tr>
-    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Code</th>
-    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Description</th>
-    <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:right;">Qty</th>
-  </tr></thead>
-  <tbody>${rows}</tbody>
-</table>
-${notesHtml}
-<div style="margin-top:20px;border-top:1.5px solid #17222f;padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-  <span style="font-size:6.5pt;color:#999;">L&A Scaffolding &mdash; Confirm codes with supplier prior to dispatch.</span>
-  <span style="font-size:9pt;font-weight:800;color:#17222f;">L<span style="color:#e5500b;">&amp;</span>A SCAFFOLDING</span>
-</div>
-</body></html>`;
+    // Hide the summary overlay, print the page, then restore
+    const overlay = document.getElementById('summary-overlay');
+    const printDiv = document.getElementById('print-content');
 
-    // Use Blob + anchor download — works on iOS Safari, Android Chrome, all mobile browsers
-    try {
-      const blob = new Blob([html], { type: 'text/html' });
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href     = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-    } catch(e) {
-      // Fallback: open as data URI (older iOS)
-      const encoded = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
-      window.location.href = encoded;
-    }
+    printDiv.innerHTML = `
+      <div style="background:#17222f;color:#fff;padding:14px 18px 10px;border-bottom:3px solid #e5500b;margin-bottom:16px;">
+        <div style="font-size:18pt;font-weight:800;line-height:1;">L&A Scaffolding — Material Order</div>
+        <div style="display:flex;gap:20px;margin-top:6px;flex-wrap:wrap;">
+          <span style="font-size:9pt;color:#aab;">Project: <strong style="color:#fff;">${project}</strong></span>
+          <span style="font-size:9pt;color:#aab;">Delivery: <strong style="color:#fff;">${date}</strong></span>
+          <span style="font-size:9pt;color:#aab;">Time: <strong style="color:#fff;">${time}</strong></span>
+        </div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr>
+          <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Code</th>
+          <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:left;">Description</th>
+          <th style="font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;padding:4px 10px;border-bottom:1.5px solid #999;text-align:right;">Qty</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${notesHtml}
+      <div style="margin-top:20px;border-top:1.5px solid #17222f;padding-top:6px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+        <span style="font-size:6.5pt;color:#999;">L&A Scaffolding — Confirm codes with supplier prior to dispatch.</span>
+        <span style="font-size:9pt;font-weight:800;color:#17222f;">L<span style="color:#e5500b;">&amp;</span>A SCAFFOLDING</span>
+      </div>`;
+
+    window.print();
   }
 </script>
 
